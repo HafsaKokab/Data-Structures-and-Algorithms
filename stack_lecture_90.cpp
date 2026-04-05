@@ -216,7 +216,7 @@ int main() {
 }
 
 
-
+/////////////////////////////////////////////
 
 //parenthesis valid or not
 //time complexity   O(n)
@@ -248,7 +248,52 @@ int main() {
     cout<<check(str);
     return 0;
 }
+/////////////////////////////////////////
 
+#include <iostream>
+using namespace std;
+
+bool check(string str) {
+
+    int left = 0;
+
+    for(int i = 0; i < str.size(); i++) {
+
+        if(str[i] == '(') {
+            left++;   // opening bracket
+        }
+        else {
+            if(left == 0) {
+                return false;  // no matching opening
+            }
+            left--;   // match found
+        }
+    }
+
+    // agar koi opening bach gayi ho
+    if(left == 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+int main() {
+
+    string str = "((()))";
+
+    if(check(str)) {
+        cout << "Valid";
+    } else {
+        cout << "Invalid";
+    }
+
+    return 0;
+}
+
+
+///////////////////////////////////////////////////
 #include <iostream>
 #include<vector>
 #include<stack>
