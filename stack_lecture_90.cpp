@@ -161,6 +161,63 @@ int main() {
     return 0;
 }
 
+
+
+
+
+
+#include <iostream>
+#include <vector>
+#include <stack>
+using namespace std;
+
+vector<string> removeAdjacentDuplicates(vector<string>& v) {
+    
+    stack<string> s;
+
+    for(int i = 0; i < v.size(); i++) {
+        
+        if(s.empty()) {
+            s.push(v[i]);
+        }
+        else if(s.top() == v[i]) {
+            s.pop();   // cancel
+        }
+        else {
+            s.push(v[i]);
+        }
+    }
+
+    // Convert stack to vector (correct order)
+    vector<string> ans(s.size());
+    int i = s.size() - 1;
+
+    while(!s.empty()) {
+        ans[i] = s.top();
+        i--;
+        s.pop();
+    }
+
+    return ans;
+}
+
+int main() {
+
+    vector<string> v = {"ac", "da", "da", "ac", "db", "ea"};
+
+    vector<string> result = removeAdjacentDuplicates(v);
+
+    cout << "Result: ";
+    for(string s : result) {
+        cout << s << " ";
+    }
+
+    return 0;
+}
+
+
+
+
 //parenthesis valid or not
 //time complexity   O(n)
 #include <iostream>
