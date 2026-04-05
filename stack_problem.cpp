@@ -289,3 +289,94 @@ int main()
 
     cout << st.top();
 }
+
+
+
+//infix to prefix
+a*i^(f/j)+(k+t)
++*a^i/fj+kt
+#include <iostream>
+#include <stack>
+#include <algorithm>
+using namespace std;
+
+// precedence function
+int precedence(char op)
+{
+    if(op == '+' || op == '-') return 1;
+    if(op == '*' || op == '/') return 2;
+    if(op == '^') return 3;
+    return 0;
+}
+
+int main()
+{
+    string infix;
+    cin >> infix;
+
+    // 🔹 Step 1: Reverse infix
+    reverse(infix.begin(), infix.end());
+
+    // 🔹 Step 2: Swap brackets
+    for(int i = 0; i < infix.length(); i++)
+    {
+        if(infix[i] == '(')
+            infix[i] = ')';
+        else if(infix[i] == ')')
+            infix[i] = '(';
+    }
+
+    // 🔹 Step 3: Infix → Postfix
+    stack<char> st;
+    string postfix = "";
+
+    for(int i = 0; i < infix.length(); i++)
+    {
+        char c = infix[i];
+
+        // operand
+        if(isalnum(c))
+        {
+            postfix += c;
+        }
+        // opening bracket
+        else if(c == '(')
+        {
+            st.push(c);
+        }
+        // closing bracket
+        else if(c == ')')
+        {
+            while(!st.empty() && st.top() != '(')
+            {
+                postfix += st.top();
+                st.pop();
+            }
+            st.pop(); // remove '('
+        }
+        // operator
+        else
+        {
+            while(!st.empty() && precedence(st.top()) >= precedence(c))
+            {
+                postfix += st.top();
+                st.pop();
+            }
+            st.push(c);
+        }
+    }
+
+    // pop remaining operators
+    while(!st.empty())
+    {
+        postfix += st.top();
+        st.pop();
+    }
+
+    // 🔹 Step 4: Reverse postfix → Prefix
+    reverse(postfix.begin(), postfix.end());
+
+    cout << postfix;
+
+    return 0;
+}
