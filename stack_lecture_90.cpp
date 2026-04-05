@@ -22,7 +22,7 @@ void reversestring(vector<char>&s){
     }
      // Pop characters back into vector (reversed)
     int i=0;
-    while(st.empty()){
+    while(!st.empty()){
         s[i]=st.top();
         i++;
         st.pop();
